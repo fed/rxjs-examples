@@ -7,6 +7,15 @@ const start$ = Observable.fromEvent(startButton, 'click');
 const stop$ = Observable.fromEvent(stopButton, 'click');
 const interval$ = Observable.interval(500);
 
+// One way, using takeUntil
+start$
+    .switchMapTo(interval$)
+    .takeUntil(stop$)
+    .subscribe((value) => {
+        console.log(value)
+    });
+
+// Another way, using unsubscribe()
 const subscription = start$
     .switchMapTo(interval$)
     .subscribe((value) => {
